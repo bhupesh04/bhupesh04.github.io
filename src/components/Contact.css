@@ -1,0 +1,35 @@
+.contact-layout { display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 40px; margin-top: 40px; align-items: start; }
+.contact-status-banner { display: flex; align-items: center; gap: 14px; background: var(--green-dim); border: 1px solid rgba(45,212,160,0.25); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; }
+.contact-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: pulse-green 2s ease-in-out infinite; flex-shrink: 0; }
+.contact-status-title { font-size: 15px; font-weight: 600; color: var(--green); }
+.contact-status-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; }
+.contact-link-card { display: flex; align-items: center; gap: 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; transition: var(--transition); }
+.contact-link-card:hover { border-color: var(--border-accent); background: var(--bg-card-hover); }
+.contact-link-icon { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--accent-glow); border: 1px solid var(--accent-border); color: var(--accent); flex-shrink: 0; }
+.contact-link-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; font-family: var(--font-mono); margin-bottom: 2px; }
+.contact-link-value { font-size: 13px; color: var(--text-primary); font-weight: 500; word-break: break-all; }
+.contact-form-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 7px; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.form-group input, .form-group textarea { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 11px 14px; font-size: 14px; color: var(--text-primary); font-family: var(--font-sans); transition: border-color 0.2s; outline: none; resize: vertical; }
+.form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
+.submit-btn { width: 100%; justify-content: center; padding: 13px; font-size: 15px; }
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.form-error { font-size: 13px; color: #f87171; background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2); border-radius: var(--radius-sm); padding: 10px 14px; }
+.form-success { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; gap: 12px; }
+.success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--green-dim); border: 1px solid rgba(45,212,160,0.3); display: flex; align-items: center; justify-content: center; color: var(--green); }
+.form-success h3 { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+.form-success p { font-size: 14px; color: var(--text-secondary); }
+.footer { margin-top: 60px; border-top: 1px solid var(--border); padding: 24px 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-size: 13px; color: var(--text-muted); }
+.footer-links { display: flex; gap: 16px; }
+.footer-links a { color: var(--text-muted); transition: var(--transition); display: flex; }
+.footer-links a:hover { color: var(--accent); }
+@media (max-width: 768px) { .contact-layout { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .footer-inner { flex-direction: column; gap: 12px; text-align: center; } }
