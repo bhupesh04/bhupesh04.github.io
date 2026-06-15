@@ -150,7 +150,7 @@
 .highlight-quote-text {
   font-size: 14.5px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--accent);
   line-height: 1.5;
   margin: 0;
 }
