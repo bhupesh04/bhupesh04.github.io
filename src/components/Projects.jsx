@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiGithub, FiExternalLink, FiChevronDown, FiChevronUp } from 'react-icons/fi'
+import { FiGithub, FiExternalLink, FiPlayCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import './Projects.css'
 
 const projects = [
@@ -18,59 +18,86 @@ const projects = [
     impact: [
       'Architected 4 independent microservices (Auth, Question, Vote, API Gateway) each with its own MySQL database and full JWT + RBAC security',
       'Strategy Pattern for vote handling (UpvoteStrategy / DownvoteStrategy via VoteStrategyFactory) with two-layer duplicate-vote prevention — application-level exception plus a database UNIQUE KEY constraint',
-      'Optimistic locking with @Version for safe concurrent voting under load',
+      'Optimistic locking with @Version for safe concurrent vote updates',
       'Spring Cloud Gateway as a single entry point — JWT validation, CORS, and request routing for all services on port 8080',
       'React.js frontend with Hooks-based state management and Bootstrap 5, fully decoupled from the backend',
       'Applied 10+ advanced Java concepts: Streams API, functional interfaces, Optional<T>, @Async with ThreadPoolTaskExecutor, CompletableFuture<T>, custom annotations (@ValidDifficulty, @CurrentUser), and JdbcTemplate alongside JPA for native SQL aggregation',
     ],
     architecture: 'Microservices architecture — 4 independently deployable Spring Boot services, each with its own database, communicating via REST behind a Spring Cloud Gateway. Strategy, Factory, and Builder patterns applied for vote handling and object construction. RBAC enforced uniformly via JWT across every service.',
     tech: ['Java', 'Spring Boot', 'Spring Security', 'Spring Cloud Gateway', 'JWT', 'JPA/Hibernate', 'Microservices', 'MySQL', 'React.js'],
-    github: 'https://github.com/bhupesh04',
+    github: 'https://github.com/bhupesh04/PrepMate',
     color: '#4f8ef7',
+  },
+  {
+    id: 'wallet',
+    title: 'Wallet System',
+    subtitle: 'Secure Digital Wallet Backend — Idempotency & Concurrency',
+    status: 'Latest',
+    description:
+      'A Paytm/PhonePe-style wallet backend where balances stay correct under concurrent requests and duplicate API calls. JWT-secured with USER and ADMIN roles, and the wallet identity always comes from the token — never from the request body.',
+    problem:
+      'Money APIs fail in subtle ways: a retried request can charge twice, and two simultaneous transfers can corrupt a balance or deadlock each other. The hard part is correctness, not CRUD.',
+    solution:
+      'Every money-moving call carries an Idempotency-Key backed by a database unique constraint. Single-wallet updates use optimistic locking (@Version); transfers take pessimistic write locks on both wallets in ascending ID order to rule out deadlocks. Each operation runs as one @Transactional unit.',
+    impact: [
+      'Idempotent add-money and transfer: duplicate or racing requests return the stored result or a 409 Conflict — never a double charge',
+      'Two locking strategies chosen per case: optimistic (@Version) for a single wallet, pessimistic SELECT … FOR UPDATE for transfers, always acquired in ascending wallet-ID order to prevent deadlocks',
+      'Atomic transactions: balance changes and the transaction record commit together or roll back; failed attempts are stored as FAILED rows for audit',
+      'Stateless JWT authentication, BCrypt-hashed passwords, and USER / ADMIN role rules enforced in Spring Security',
+      'Global exception handling that maps failures to precise status codes (400, 401, 403, 404, 409, 422)',
+      'JUnit 5 + Mockito unit and integration tests with an enforced 80% JaCoCo coverage gate',
+    ],
+    architecture: 'Layered Spring Boot 3 / Java 17 application — config, controller, service, repository, entity, DTO and exception packages. Stateless Spring Security filter chain with a JWT filter, Spring Data JPA on an in-memory H2 database, Bean Validation on request DTOs.',
+    tech: ['Java 17', 'Spring Boot 3', 'Spring Security', 'JWT', 'Spring Data JPA', 'H2', 'JUnit 5', 'Mockito', 'JaCoCo', 'Maven'],
+    github: 'https://github.com/bhupesh04/Wallet-System',
+    demo: 'https://www.loom.com/share/4c5c3a055144405e8de4d9141f984f5a',
+    demoLabel: 'Watch code walkthrough video',
+    demoType: 'video',
+    color: '#a78bfa',
   },
   {
     id: 'shopmate',
     title: 'ShopMate',
     subtitle: 'Full-Stack E-Commerce Platform',
-    status: 'Featured',
+    status: 'Full-Stack',
     description:
-      'A production-quality e-commerce platform built from scratch. Not a clone, not a tutorial — a fully working application with four modules, role-based access control, an admin dashboard tracking live KPIs, and automated PDF invoice generation.',
+      'A full-stack e-commerce application built end-to-end with Spring Boot MVC — four core modules (Customer, Product, Order, Admin), a responsive JSP + Bootstrap 5 interface, a normalized MySQL schema, and automated PDF invoices.',
     problem:
-      'Most e-commerce demos skip the hard parts: authentication, state management across user roles, and real order workflows. ShopMate implements all of them.',
+      'Most e-commerce demos stop at a product list. ShopMate carries an order through its entire lifecycle and gives administrators the numbers they need to run the store.',
     solution:
-      'Spring Boot REST backend secured with Spring Security and JWT. Four modules (Customer, Product, Order, Admin) each with full CRUD. React.js frontend with hooks connected to the live API.',
+      'Spring Boot MVC with a layered Controller–Service–Repository structure, JPA/Hibernate persistence on a normalized MySQL schema, server-rendered JSP views styled with Bootstrap 5, and iText 7 for invoice generation.',
     impact: [
-      'Role-Based Access Control using Spring Security + JWT — customers and admins see different interfaces',
-      'Complete order lifecycle: cart → checkout → placed → fulfilled, with correct DB transitions',
-      'Admin dashboard with real KPIs: total orders, revenue, active users',
-      'Automated PDF invoice generation via iText 7 on every order',
-      'Responsive UI across desktop, tablet, mobile with Bootstrap 5 + CSS3',
+      'Four modules — Customer, Product, Order and Admin — covering the complete shopping flow',
+      'Full order lifecycle across four states: cart → checkout → placed → fulfilled, persisted with JPA/Hibernate',
+      'Separate customer and admin roles; the admin KPI dashboard (e.g. total orders and revenue) sits behind a session-protected login',
+      'Automated PDF invoice generation with iText 7',
+      'Responsive interface across desktop, tablet and mobile with Bootstrap 5',
     ],
-    architecture: 'Controller → Service → Repository (Spring MVC layered), JWT stateless auth, normalized MySQL schema in 3NF, React functional components with Hooks',
-    tech: ['Java', 'Spring Boot', 'Spring Security', 'JWT', 'JPA/Hibernate', 'MySQL', 'React.js', 'Bootstrap 5', 'iText 7'],
-    github: 'https://github.com/bhupesh04',
+    architecture: 'Spring Boot MVC with layered Controller–Service–Repository architecture, JPA/Hibernate over a normalized MySQL schema, and server-rendered JSP views.',
+    tech: ['Java', 'Spring Boot', 'Spring MVC', 'JPA/Hibernate', 'MySQL', 'JSP', 'Bootstrap 5', 'iText 7'],
+    github: 'https://github.com/bhupesh04/ShopMate',
     color: '#2dd4a0',
   },
   {
     id: 'enrollment',
     title: 'Student Course Enrollment',
-    subtitle: 'Secured REST API System',
-    status: 'Backend',
+    subtitle: 'REST API for Students, Courses & Enrollments',
+    status: 'REST API',
     description:
-      'A complete RESTful backend system with 10+ secured endpoints managing Students, Courses, and Enrollments. Full CRUD on every resource, JWT-protected routes, proper HTTP status codes, and tested across 20+ Postman test cases.',
+      'A Spring Boot REST API with 20 endpoints across three controllers — Students, Courses and Enrollments — covering full CRUD, filter and lookup endpoints, and MySQL persistence through Spring Data JPA.',
     problem:
-      'Designing a clean, secure API with complex relational data (students enrolling in many courses) while keeping architecture decoupled from any frontend.',
+      'Keeping students, courses and their enrollments queryable from every angle: by city, by email, by course duration, and by student or course.',
     solution:
-      'Strict Controller–Service–Repository separation. One-to-many and many-to-many JPA mappings. Custom JPQL queries for filtered lookups. JWT on every route.',
+      'Three REST controllers sitting on Spring Data JPA repositories. Derived query methods power the filter endpoints, and an Enrollment entity links students to courses.',
     impact: [
-      '10+ secured REST endpoints — GET, POST, PUT, DELETE with correct HTTP status codes',
-      'Complex JPA mappings: one-to-many (student ↔ enrollments) and many-to-many (student ↔ courses)',
-      'Custom JPQL filter endpoints: by city, email, course duration, enrollment count',
-      'Fully decoupled — zero frontend dependency, tested end-to-end in Postman across 20+ cases',
+      '20 REST endpoints across Students, Courses and Enrollments, with full CRUD on students and courses',
+      'Filter and lookup endpoints: students by city and email, courses by duration, enrollments by student or by course',
+      'Spring Data JPA derived query methods over a MySQL schema',
+      'Tested end-to-end in Postman',
     ],
-    architecture: 'Controller–Service–Repository layered architecture, JWT stateless auth, Spring Data JPA with custom JPQL, MySQL relational schema',
-    tech: ['Java', 'Spring Boot', 'Spring Security', 'JWT', 'JPA/Hibernate', 'MySQL', 'Postman', 'REST APIs'],
-    github: 'https://github.com/bhupesh04',
+    architecture: 'Spring Web REST controllers over Spring Data JPA repositories, backed by a MySQL relational schema.',
+    tech: ['Java', 'Spring Boot', 'Spring Data JPA', 'REST APIs', 'MySQL', 'Postman'],
+    github: 'https://github.com/bhupesh04/Student-Course-Enrollment',
     color: '#fb923c',
   },
 ]
@@ -97,12 +124,14 @@ function ProjectCard({ project, index }) {
             <p className="project-subtitle">{project.subtitle}</p>
           </div>
           <div className="project-links">
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="icon-btn" aria-label="GitHub">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" className="icon-btn"
+              aria-label={`${project.title} source code on GitHub`} title="View source on GitHub">
               <FiGithub size={18} />
             </a>
             {project.demo && (
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="icon-btn" aria-label="Live Demo">
-                <FiExternalLink size={18} />
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="icon-btn"
+                aria-label={project.demoLabel || 'Live demo'} title={project.demoLabel || 'Live demo'}>
+                {project.demoType === 'video' ? <FiPlayCircle size={18} /> : <FiExternalLink size={18} />}
               </a>
             )}
           </div>

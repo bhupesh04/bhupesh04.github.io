@@ -9,6 +9,8 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
+const RESUME_URL = '/assets/Bhupesh_Suryawanshi_FullStack_Resume.pdf'
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -19,6 +21,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
+  const scrollToTop = e => {
+    e.preventDefault()
+    setMenuOpen(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const handleLink = (e, href) => {
     e.preventDefault()
     setMenuOpen(false)
@@ -28,7 +36,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
       <div className="nav-inner container">
-        <a href="#" className="nav-logo" onClick={e => handleLink(e, '#')}>
+        <a href="#home" className="nav-logo" onClick={scrollToTop} aria-label="Back to top">
           <span className="logo-bracket">&lt;</span>
           <span className="logo-name">BS</span>
           <span className="logo-bracket">/&gt;</span>
@@ -41,15 +49,17 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a href="/assets/Bhupesh_Suryawanshi_FullStack_Resume.pdf"
+          <a href={RESUME_URL}
             className="btn btn-outline nav-resume"
-            target="_blank" rel="noopener noreferrer">
+            target="_blank" rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}>
             Resume
           </a>
         </div>
 
         <button className={`nav-hamburger${menuOpen ? ' active' : ''}`}
-          onClick={() => setMenuOpen(o => !o)} aria-label="Toggle menu">
+          onClick={() => setMenuOpen(o => !o)}
+          aria-label="Toggle menu" aria-expanded={menuOpen}>
           <span /><span /><span />
         </button>
       </div>

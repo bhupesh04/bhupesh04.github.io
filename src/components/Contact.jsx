@@ -3,9 +3,15 @@ import { motion } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiMail, FiPhone, FiSend, FiCheck } from 'react-icons/fi'
 import './Contact.css'
 
+// ── Contact form: FormSubmit — the same service your original portfolio used ──
+// Messages are delivered to this inbox. The very first message sent triggers a
+// one-time "Activate form" email from FormSubmit: open it and click the link.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/220490131090.bhupesh@gmail.com'
+const DIRECT_EMAIL = 'suryawanshibhupesh4@gmail.com'
+
 const socials = [
   { icon: <FiMail size={18} />, label: 'Email', value: 'suryawanshibhupesh4@gmail.com', href: 'mailto:suryawanshibhupesh4@gmail.com' },
-  { icon: <FiLinkedin size={18} />, label: 'LinkedIn', value: '/in/bhupesh-suryawanshi/15', href: 'https://www.linkedin.com/in/bhupesh-suryawanshi15/' },
+  { icon: <FiLinkedin size={18} />, label: 'LinkedIn', value: '/in/bhupesh-suryawanshi15', href: 'https://www.linkedin.com/in/bhupesh-suryawanshi15/' },
   { icon: <FiGithub size={18} />, label: 'GitHub', value: 'github.com/bhupesh04', href: 'https://github.com/bhupesh04' },
   { icon: <FiPhone size={18} />, label: 'Phone', value: '+91 6354962174', href: 'tel:+916354962174' },
 ]
@@ -20,18 +26,30 @@ export default function Contact() {
     e.preventDefault()
     setStatus('loading')
     try {
-      // REPLACE THIS with your existing EmailJS / Formspree / Web3Forms code
-      const formData = new FormData()
-      formData.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY') // ← replace
-      formData.append('name', form.name)
-      formData.append('email', form.email)
-      formData.append('subject', form.subject || 'Portfolio Contact')
-      formData.append('message', form.message)
-      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
-      const data = await res.json()
-      if (data.success) { setStatus('success'); setForm({ name: '', email: '', subject: '', message: '' }) }
-      else setStatus('error')
-    } catch { setStatus('error') }
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: form.subject || 'New message from your portfolio',
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && String(data.success) === 'true') {
+        setStatus('success')
+        setForm({ name: '', email: '', subject: '', message: '' })
+      } else {
+        console.error('FormSubmit did not accept the message:', data)
+        setStatus('error')
+      }
+    } catch (err) {
+      console.error('Contact form request failed:', err)
+      setStatus('error')
+    }
   }
 
   return (
@@ -102,7 +120,12 @@ export default function Contact() {
                   <label htmlFor="message">Message</label>
                   <textarea id="message" name="message" value={form.message} onChange={handleChange} placeholder="Tell me about the role or project..." rows={5} required />
                 </div>
-                {status === 'error' && <p className="form-error">Something went wrong. Please try emailing directly.</p>}
+                {status === 'error' && (
+                  <p className="form-error">
+                    Couldn't send your message right now. Please email me directly at{' '}
+                    <a href={`mailto:${DIRECT_EMAIL}`} style={{ textDecoration: 'underline' }}>{DIRECT_EMAIL}</a>.
+                  </p>
+                )}
                 <button type="submit" className="btn btn-primary submit-btn" disabled={status === 'loading'}>
                   {status === 'loading' ? <span className="spinner" /> : <><FiSend size={15} /> Send Message</>}
                 </button>

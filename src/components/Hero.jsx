@@ -77,7 +77,7 @@ export default function Hero() {
 
           <div className="hero-cta">
             <button className="btn btn-primary" onClick={scrollToProjects}>View Projects</button>
-            <a href="/assets/Bhupesh_Suryawanshi_Resume.pdf" className="btn btn-outline"
+            <a href="/assets/Bhupesh_Suryavanshi_Resume.pdf" className="btn btn-outline"
               target="_blank" rel="noopener noreferrer" download>
               <FiDownload size={15} /> Download Resume
             </a>
@@ -89,7 +89,7 @@ export default function Hero() {
 
           <div className="hero-social">
             <a href="https://github.com/bhupesh04" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FiGithub size={20} /></a>
-            <a href="https://linkedin.com/in/bhupesh-suryawanshi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FiLinkedin size={20} /></a>
+            <a href="https://linkedin.com/in/bhupesh-suryawanshi15" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FiLinkedin size={20} /></a>
             <a href="mailto:suryawanshibhupesh4@gmail.com" aria-label="Email"><FiMail size={20} /></a>
           </div>
         </motion.div>
