@@ -25,10 +25,11 @@ export default function About() {
             </h2>
 
             <p className="about-para">
-              Final-year B.E. Computer Science student at GTU who spent the last two years building
-              real applications instead of writing assignments. My projects ship working features: role-based
-              access control, JWT authentication, order lifecycle management, PDF invoice generation,
-              and admin dashboards — all in production-quality Spring Boot + React stacks.
+              Computer Science & Engineering graduate (B.E., GTU 2026) who spent the last two years
+              building real applications instead of writing assignments. My projects ship working
+              features: JWT authentication and role-based access across microservices, concurrency-safe
+              wallet transactions, order lifecycle management, PDF invoice generation, and admin
+              dashboards — built on Spring Boot with React and JSP front ends.
             </p>
 
             <p className="about-para">
@@ -72,7 +73,7 @@ export default function About() {
                 </div>
                 <div className="highlight-label">CGPA</div>
                 <div className="highlight-divider" />
-                <div className="highlight-tagline">Built, not assigned</div>
+                <div className="highlight-tagline">Earned, not given</div>
               </div>
 
               <div className="highlight-card highlight-quote">

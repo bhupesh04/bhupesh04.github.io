@@ -47,8 +47,8 @@ export default function Experience() {
                   <div className="exp-impact-label">Social Impact Project Domains</div>
                 </div>
                 <div className="exp-impact-stat">
-                  <div className="exp-impact-value">100%</div>
-                  <div className="exp-impact-label">Manual Reporting Replaced</div>
+                  <div className="exp-impact-value">Weekly</div>
+                  <div className="exp-impact-label">Manual Report Replaced</div>
                 </div>
               </div>
 
@@ -97,7 +97,7 @@ export default function Experience() {
               <div>
                 <div className="achievement-title">Co-ordinator, TechnoKruti TK24</div>
                 <div className="achievement-sub">State Level Techfest — S N Patel Institute</div>
-                <div className="achievement-detail">Handled end-to-end logistics and coordination for 100+ participants across multiple technical events.</div>
+                <div className="achievement-detail">Handled logistics, volunteer coordination and scheduling for 1500+ participants at a state-level techfest.</div>
               </div>
             </div>
           </motion.div>

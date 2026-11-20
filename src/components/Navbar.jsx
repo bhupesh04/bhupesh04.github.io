@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const RESUME_URL = '/assets/Bhupesh_Suryawanshi_FullStack_Resume.pdf'
+const RESUME_URL = '/assets/Bhupesh_Suryavanshi_Resume.pdf'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
